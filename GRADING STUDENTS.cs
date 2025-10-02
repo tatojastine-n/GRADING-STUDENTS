@@ -1,76 +1,75 @@
-#include <bits/stdc++.h>
+using System.CodeDom.Compiler;
+using System.Collections.Generic;
+using System.Collections;
+using System.ComponentModel;
+using System.Diagnostics.CodeAnalysis;
+using System.Globalization;
+using System.IO;
+using System.Linq;
+using System.Reflection;
+using System.Runtime.Serialization;
+using System.Text.RegularExpressions;
+using System.Text;
+using System;
 
-using namespace std;
-
-string ltrim(const string &);
-string rtrim(const string &);
-
-/*
- * Complete the 'gradingStudents' function below.
- *
- * The function is expected to return an INTEGER_ARRAY.
- * The function accepts INTEGER_ARRAY grades as parameter.
- */
-
-vector<int> gradingStudents(vector<int> grades) {
-
-}
-
-int main()
+class Result
 {
-    ofstream fout(getenv("OUTPUT_PATH"));
 
-    string grades_count_temp;
-    getline(cin, grades_count_temp);
+    /*
+     * Complete the 'gradingStudents' function below.
+     *
+     * The function is expected to return an INTEGER_ARRAY.
+     * The function accepts INTEGER_ARRAY grades as parameter.
+     */
 
-    int grades_count = stoi(ltrim(rtrim(grades_count_temp)));
-
-    vector<int> grades(grades_count);
-
-    for (int i = 0; i < grades_count; i++) {
-        string grades_item_temp;
-        getline(cin, grades_item_temp);
-
-        int grades_item = stoi(ltrim(rtrim(grades_item_temp)));
-
-        grades[i] = grades_item;
-    }
-
-    vector<int> result = gradingStudents(grades);
-
-    for (size_t i = 0; i < result.size(); i++) {
-        fout << result[i];
-
-        if (i != result.size() - 1) {
-            fout << "\n";
+    public static List<int> gradingStudents(List<int> grades)
+    {
+        List<int> result = new List<int>();
+        foreach (int grade in grades)
+        {
+            if (grade < 38)
+            {
+                result.Add(grade);
+            }
+            else
+            {
+                int remainder = grade % 5;
+                if (remainder >= 3)
+                {
+                    result.Add(grade + (5 - remainder));
+                }
+                else
+                {
+                    result.Add(grade);
+                }
+            }
         }
+        return result;
     }
 
-    fout << "\n";
-
-    fout.close();
-
-    return 0;
 }
 
-string ltrim(const string &str) {
-    string s(str);
+class Solution
+{
+    public static void Main(string[] args)
+    {
+        TextWriter textWriter = new StreamWriter(@System.Environment.GetEnvironmentVariable("OUTPUT_PATH"), true);
 
-    s.erase(
-        s.begin(),
-        find_if(s.begin(), s.end(), not1(ptr_fun<int, int>(isspace)))
-    );
+        int gradesCount = Convert.ToInt32(Console.ReadLine().Trim());
 
-    return s;
-}
+        List<int> grades = new List<int>();
 
-string rtrim(const string &str) {
-    string s(str);
+        for (int i = 0; i < gradesCount; i++)
+        {
+            int gradesItem = Convert.ToInt32(Console.ReadLine().Trim());
+            grades.Add(gradesItem);
+        }
 
-    s.erase(
-        find_if(s.rbegin(), s.rend(), not1(ptr_fun<int, int>(isspace))).base(),
-        s.end()
-    );
+        List<int> result = Result.gradingStudents(grades);
 
-    return s;
+        textWriter.WriteLine(String.Join("\n", result));
+
+        textWriter.Flush();
+        textWriter.Close();
+    }
 }
